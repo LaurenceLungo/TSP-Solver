@@ -8,6 +8,7 @@ class Plotter:
         self.node_map = node_map
         self.start = node_map[route[0]]
         self.route = route
+        self.length = length
         self.annotate_flag = annotate_flag
         self.annotate = []
         for i in range(len(node_map)):
@@ -29,4 +30,5 @@ class Plotter:
             cx = [p1[0], p2[0]]
             cy = [p1[1], p2[1]]
             self.ax.plot(cx, cy, 'k-')
+        self.ax.legend([self.length])
         plt.show()
