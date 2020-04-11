@@ -1,6 +1,7 @@
 import argparse
 from numpy import linalg
 import pandas as pd
+from algo.greedy import greedy_rotate
 
 parser = argparse.ArgumentParser(description='Solving the TSP.')
 parser.add_argument('input', metavar='i', nargs='?', default='mat-test.txt',
@@ -23,3 +24,5 @@ for i in range(len(node)):
     for j in range(len(node)):
         euclideanMap[i][j] = linalg.norm(node[i] - node[j])
 
+length, route = greedy_rotate(euclideanMap, node)
+print(length, route)
