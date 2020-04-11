@@ -1,5 +1,6 @@
 from .plotter.plotter import Plotter
 
+
 def greedy_rotate(euclideanMap, node):
     globalTourLength = 9999999
     globalTourRoute = []
