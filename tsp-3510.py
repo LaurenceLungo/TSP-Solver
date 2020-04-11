@@ -1,7 +1,7 @@
 import argparse
 from numpy import linalg
 import pandas as pd
-from algo.greedy import greedy_rotate
+from algo.greedy_rotate import greedy_rotate
 
 parser = argparse.ArgumentParser(description='Solving the TSP.')
 parser.add_argument('input', metavar='i', nargs='?', default='mat-test.txt',
