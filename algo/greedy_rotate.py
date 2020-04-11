@@ -14,18 +14,23 @@ def greedy_rotate(euclideanMap, node):
             tourRoute.append(currentNode)
             neighbourLength = []
             for j in unvisitedNodes:
-                neighbourLength.append(euclideanMap[currentNode][j])
+                neighbourLength.append((euclideanMap[currentNode][j], j))
             if len(neighbourLength) > 0:
-                tourLength += min(neighbourLength)
-                currentNode = euclideanMap[currentNode].index(min(neighbourLength))
+                minNeighbourLength = neighbourLength[0][0]
+                minNeighbour = neighbourLength[0][1]
+                for i in neighbourLength:
+                    if i[0] < minNeighbourLength:
+                        minNeighbourLength = i[0]
+                        minNeighbour = i[1]
+                tourLength += minNeighbourLength
+                currentNode = minNeighbour
             else:
-                tourLength += euclideanMap[currentNode][0]
+                tourLength += euclideanMap[currentNode][p]
                 currentNode = p
                 tourRoute.append(currentNode)
                 break
         if globalTourLength is None or tourLength < globalTourLength:
             globalTourLength = tourLength
             globalTourRoute = tourRoute
-    pltr = Plotter(node, globalTourLength, globalTourRoute, True)
-    pltr.show()
+    Plotter(node, globalTourLength, globalTourRoute, False)
     return globalTourLength, globalTourRoute

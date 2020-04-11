@@ -15,7 +15,6 @@ class Plotter:
             self.annotate.append(i)
         self.fig, self.ax = plt.subplots()
 
-    def show(self):
         X = self.node_map.T[0]
         Y = self.node_map.T[1]
         self.ax.scatter(X, Y)
