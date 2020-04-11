@@ -2,7 +2,7 @@ from .plotter.plotter import Plotter
 
 
 def greedy_rotate(euclideanMap, node):
-    globalTourLength = 9999999
+    globalTourLength = None
     globalTourRoute = []
     for p in range(len(euclideanMap)):
         unvisitedNodes = [i for i in range(len(euclideanMap))]
@@ -23,7 +23,7 @@ def greedy_rotate(euclideanMap, node):
                 currentNode = p
                 tourRoute.append(currentNode)
                 break
-        if tourLength < globalTourLength:
+        if globalTourLength is None or tourLength < globalTourLength:
             globalTourLength = tourLength
             globalTourRoute = tourRoute
     pltr = Plotter(node, globalTourLength, globalTourRoute, True)
