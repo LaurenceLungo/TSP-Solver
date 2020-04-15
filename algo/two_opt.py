@@ -4,7 +4,7 @@ import time
 
 
 def two_opt(euclideanMap, node, init_length, route, duration):
-    st = time.time()
+    timeout = time.time() + duration
     seed()
     route_len = len(route)-1
     global_route = route[:route_len].copy()
@@ -20,8 +20,6 @@ def two_opt(euclideanMap, node, init_length, route, duration):
             c += euclideanMap[r[i]][r[j]]
         c += euclideanMap[r[0]][r[-1]]
         return c
-    T = cal_length(global_route) == init_length
-    timeout = time.time() + duration
     while time.time() < timeout:
         curr_route = global_route.copy()
         i = randpos()
@@ -31,11 +29,11 @@ def two_opt(euclideanMap, node, init_length, route, duration):
         curr_route[j] = temp
         curr_length = cal_length(curr_route)
         # Plotter(node, curr_length, curr_route, True)
-        if curr_length < global_length:
+        if curr_length <= global_length:
             global_route = curr_route
             global_length = curr_length
-            print(str(global_length) + " time: " + str(time.time()-st))
+        # print(str(global_length))# + " time: " + str(time.time()-st))
     global_route.append(global_route[0])
-    Plotter(node, global_length, global_route, False)
+    Plotter(node, global_length, global_route, True)
     return global_length, global_route
 
