@@ -3,8 +3,7 @@ from random import seed, randrange
 from time import time
 
 
-def two_opt(euclidean_map, node, init_length, route, duration):
-    timeout = time() + duration
+def two_opt(euclidean_map, init_length, route, deadline):
     seed()
     route_len = len(route)-1
     global_route = route[:route_len].copy()
@@ -20,7 +19,7 @@ def two_opt(euclidean_map, node, init_length, route, duration):
             c += euclidean_map[r[i]][r[j]]
         c += euclidean_map[r[0]][r[-1]]
         return c
-    while time() < timeout:
+    while time() < deadline:
         curr_route = global_route.copy()
         i = randpos()
         j = randpos()

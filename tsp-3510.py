@@ -23,18 +23,19 @@ ini_time = time()  # start the timer here
 # lin318 Lin/Kernighan
 # pr439
 # rat575
+# pr1002_600
 # rat783
 # pla7397_783
 # uy734 79114 Uruguay
 # zi929 95345 Zimbabwe
-# lu980 11340 Luxembourg
+# -- lu980 11340 Luxembourg
 # pla7397_980
 # sw24978 855597 Sweden
 # ===========================
 
 # argument parser -----------------------------------------------------------------
 parser = ArgumentParser(description='Solving the TSP.')
-parser.add_argument('input', metavar='i', nargs='?', default='lu980.txt',
+parser.add_argument('input', metavar='i', nargs='?', default='wi29.txt',
                     help='the path to input coordinates file')
 parser.add_argument('output', metavar='o', nargs='?', default='output-tour.txt',
                     help='the path to output tour file')
@@ -72,7 +73,7 @@ node = read_csv(args['input'], sep=" ", header=None, names=['idx', 'x', 'y']).se
 euclidean_map = [[0 for x in range(len(node))] for y in range(len(node))]
 for i in range(len(node)):
     for j in range(len(node)):
-        euclidean_map[i][j] = round(linalg.norm(node[i] - node[j]))
+        euclidean_map[i][j] = int(round(linalg.norm(node[i] - node[j])))
 
 for n in node:
     n[0], n[1] = rotate([0, 0], [n[0], n[1]], 1)
@@ -80,6 +81,7 @@ for n in node:
 
 # main <><><><><><><><>><><><><><><><><><><><><><><><><><><><><><><><>><><><><><><><><><><><>><><><><><><><><><><><><><>
 duration = args["time"]
+deadline = time() + duration
 final_length = None
 final_route = None
 
@@ -87,12 +89,11 @@ g_length, g_route = greedy_rotate(euclidean_map, node)
 print("Greedy: " + str(g_length) + " " + str(g_route))
 print("time: ", time() - ini_time)
 duration -= (time() - ini_time)
-print(duration)
 
 if len(node) <= 52:
     best_sa_length = None
     best_sa_route = None
-    for _ in range(4):
+    for _ in range(int(args["time"]/30 - 1)):
         # worst case 30 sec per run
         sa_length, sa_route = sim_annealing(euclidean_map, node, g_length, g_route, 2000000)
         print(sa_length)
@@ -101,33 +102,29 @@ if len(node) <= 52:
             best_sa_route = sa_route
     final_length = best_sa_length
     final_route = best_sa_route
-elif len(node) >= 0:  # 929
-    t_length, t_route = two_opt(euclidean_map, node, g_length, g_route, 0)
-    print("two-opt: <<" + str(t_length) + ">> " + str(t_route))
-    print("time: ", time() - ini_time)
-    print()
-    # final_length = t_length
-    # final_route = t_route
-
-    ini_time = time()
-    c_length, c_route = cross_path(euclidean_map, node, g_length, g_route)
+elif len(node) <= 600:  # 575
+    c_length, c_route = cross_path(euclidean_map, node, g_length, g_route, deadline)
     print("Cross: " + str(c_length) + " " + str(c_route))
     print("time: ", time() - ini_time)
-    t_length, t_route = two_opt(euclidean_map, node, c_length, c_route, duration)
+    t_length, t_route = two_opt(euclidean_map, c_length, c_route, deadline)
     print("two-opt: <<" + str(t_length) + ">> " + str(t_route))
     print("time: ", time() - ini_time)
-    print()
-    # final_length = t_length
-    # final_route = t_route
+    final_length = t_length
+    final_route = t_route
+else:
+    t_length, t_route = two_opt(euclidean_map, g_length, g_route, deadline)
+    print("two-opt: <<" + str(t_length) + ">> " + str(t_route))
+    print("time: ", time() - ini_time)
+    final_length = t_length
+    final_route = t_route
 
-    # s_length, s_route = sim_annealing(euclideanMap, node, g_length, g_route, 2000000)
-    # print("sim_ann: cost " + str(s_length) + " " + str(s_route))
-    # print("time: ", time()-ini_time)
-    # final_length = s_length
-    # final_route = s_route
-    # print()
+print()
+print("running time: ", time() - ini_time)
+print("optimal tour: ", final_route)
+print("optimal length: ", final_length)
 
-# print("running time: ", time() - ini_time)
-# print("optimal tour: ", final_route)
-# print("optimal length: ", final_length)
+output_string = "tour cost: " + str(final_length) + "\n" + "tour: " + str(final_route)
+out = open(args['output'], 'w')
+out.write(output_string)
+out.close()
 # end of main <><><><><><><><>><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>><><><><><><><><><><>

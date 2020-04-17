@@ -32,5 +32,5 @@ def greedy_rotate(euclidean_map, node):
         if globalTourLength is None or tourLength < globalTourLength:
             globalTourLength = tourLength
             globalTourRoute = tourRoute
-    Plotter(node, globalTourLength, globalTourRoute, True)
+    # Plotter(node, globalTourLength, globalTourRoute, True)
     return globalTourLength, globalTourRoute
