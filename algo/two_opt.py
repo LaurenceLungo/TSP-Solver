@@ -1,10 +1,10 @@
 from .plotter.plotter import Plotter
 from random import seed, randrange
-import time
+from time import time
 
 
 def two_opt(euclideanMap, node, init_length, route, duration):
-    timeout = time.time() + duration
+    timeout = time() + duration
     seed()
     route_len = len(route)-1
     global_route = route[:route_len].copy()
@@ -20,7 +20,7 @@ def two_opt(euclideanMap, node, init_length, route, duration):
             c += euclideanMap[r[i]][r[j]]
         c += euclideanMap[r[0]][r[-1]]
         return c
-    while time.time() < timeout:
+    while time() < timeout:
         curr_route = global_route.copy()
         i = randpos()
         j = randpos()
@@ -32,8 +32,8 @@ def two_opt(euclideanMap, node, init_length, route, duration):
         if curr_length <= global_length:
             global_route = curr_route
             global_length = curr_length
-        # print(str(global_length))# + " time: " + str(time.time()-st))
+        # print(str(global_length))# + " time: " + str(time()-st))
     global_route.append(global_route[0])
-    Plotter(node, global_length, global_route, True)
+    # Plotter(node, global_length, global_route, True)
     return global_length, global_route
 

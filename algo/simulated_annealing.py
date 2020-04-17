@@ -7,7 +7,7 @@ seed()
 
 
 def sim_annealing(euclideanMap, node, init_length, route, num_iter):
-    st = time.time()
+    st = time()
     route_len = len(route) - 1
     global_route = route[:route_len].copy()
     global_length = init_length
@@ -73,7 +73,7 @@ def sim_annealing(euclideanMap, node, init_length, route, num_iter):
         if curr_length < global_length:
             global_route = curr_route
             global_length = curr_length
-            # print(str(global_length))  # + " time: " + str(time.time() - st) + " iter:" + str(i))
+            # print(str(global_length))  # + " time: " + str(time() - st) + " iter:" + str(i))
         elif curr_length > global_length:
             probability_for_risk = math.exp(-(curr_length - global_length) / temp)
             fuck_it = biased_flip(probability_for_risk)
@@ -82,7 +82,7 @@ def sim_annealing(euclideanMap, node, init_length, route, num_iter):
             if fuck_it:
                 global_route = curr_route
                 global_length = curr_length
-                # print("*" + str(global_length))  # + " time: " + str(time.time() - st) + " iter:" + str(i))
+                # print("*" + str(global_length))  # + " time: " + str(time() - st) + " iter:" + str(i))
         #     temp += (temp / 2)
         # temp -= delta_temp
         temp *= percent_temp
