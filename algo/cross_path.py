@@ -7,6 +7,18 @@ def cross_path(euclideanMap, node, init_length, route):
     global_length = init_length
 
     def is_intersecting(s1, e1, s2, e2):
+        if ((e1[1] - s1[1]) == 0 and (e2[1] - s2[1] == 0)) \
+                or (((e1[1] - s1[1]) / (e1[0] - s1[0])) == ((e2[1] - s2[1]) / (e2[0] - s2[0]))):
+            return 0
+
+        def is_touching(p, s, e):
+            if p[1] == s[1] == e[1]:  # 3 points form a vertical line
+                return True
+            return ((e[1] - p[1]) / (e[0] - p[0])) == ((p[1] - s[1]) / (p[0] - s[0]))
+
+        if is_touching(s2, s1, e1) or is_touching(e2, s1, e1) or is_touching(e1, s2, e2) or is_touching(s1, s2, e2):
+            return False
+
         denominator = ((e1[0] - s1[0]) * (e2[1] - s2[1])) - ((e1[1] - s1[1]) * (e2[0] - s2[0]))
         numerator1 = ((s1[1] - s2[1]) * (e2[0] - s2[0])) - ((s1[0] - s2[0]) * (e2[1] - s2[1]))
         numerator2 = ((s1[1] - s2[1]) * (e1[0] - s1[0])) - ((s1[0] - s2[0]) * (e1[1] - s1[1]))
@@ -48,17 +60,18 @@ def cross_path(euclideanMap, node, init_length, route):
                 temp = temp_route[ep1]
                 temp_route[ep1] = temp_route[sp2]
                 temp_route[sp2] = temp
-                if cal_length(temp_route) < global_length:
-                    global_route = temp_route.copy()
-                    global_length = cal_length(temp_route)
+                temp_route[ep1 + 1: sp2] = temp_route[ep1 + 1: sp2][::-1]
 
-                    print("(", spos1, ", ", epos1, ") (", spos2, ", ", epos2, ")")
-                    temp_route.append(temp_route[0])
-                    Plotter(node, cal_length(temp_route), temp_route, True)
-                    del temp_route[-1]
-                    sp1 = -1
-                    sp2 = 0
-                    break
+                global_route = temp_route.copy()
+                global_length = cal_length(temp_route)
+
+                print("(", spos1, ", ", epos1, ") (", spos2, ", ", epos2, ")")
+                # temp_route.append(temp_route[0])
+                # Plotter(node, cal_length(temp_route), temp_route, True)
+                # del temp_route[-1]
+                sp1 = -1
+                sp2 = 0
+                break
                 # print("bad (", spos1, ", ", epos1, ") (", spos2, ", ", epos2, ")")
                 sp2 += 1
             else:
