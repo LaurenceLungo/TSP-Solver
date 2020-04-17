@@ -7,7 +7,7 @@ import numpy as np
 seed()
 
 
-def sim_annealing(euclideanMap, node, init_length, route, num_iter):
+def sim_annealing(euclidean_map, node, init_length, route, num_iter):
     st = time()
     route_len = len(route) - 1
     global_route = route[:route_len].copy()
@@ -51,8 +51,8 @@ def sim_annealing(euclideanMap, node, init_length, route, num_iter):
         c = 0
         for i in range(len(r) - 1):
             j = i + 1
-            c += euclideanMap[r[i]][r[j]]
-        c += euclideanMap[r[0]][r[-1]]
+            c += euclidean_map[r[i]][r[j]]
+        c += euclidean_map[r[0]][r[-1]]
         return c
 
     init_temp = 25000
@@ -91,7 +91,7 @@ def sim_annealing(euclideanMap, node, init_length, route, num_iter):
         if global_length < global_best_length:
             global_best_length = global_length
             global_best_route = global_route.copy()
-    Plotter(np.array(prob_graph), 0, [0], False, True)
+    # Plotter(np.array(prob_graph), 0, [0], False, True)
     # Plotter(np.array(temp_graph), 0, [0], False, True)
     global_best_route.append(global_best_route[0])
     # Plotter(node, global_best_length, global_best_route, False)
