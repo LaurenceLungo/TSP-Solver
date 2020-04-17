@@ -1,10 +1,9 @@
-from .plotter.plotter import Plotter
+# from .plotter.plotter import Plotter
 
 
-def cross_path(euclidean_map, node, init_length, route, deadline):
+def cross_path(euclidean_map, node, route):
     route_len = len(route) - 1
     global_route = route[:route_len].copy()
-    global_length = init_length
 
     def is_intersecting(s1, e1, s2, e2):
         if (e1[0] == s1[0] and e2[0] == s2[0]) \
@@ -34,9 +33,6 @@ def cross_path(euclidean_map, node, init_length, route, deadline):
         s = numerator2 / denominator
         return (0 <= r <= 1) and (0 <= s <= 1)
 
-    def is_same_pt(p1, p2):
-        return p1[0] == p2[0] and p1[1] == p2[1]
-
     def cal_length(r):
         c = 0
         for i in range(len(r) - 1):
@@ -58,7 +54,6 @@ def cross_path(euclidean_map, node, init_length, route, deadline):
             epos1 = global_route[ep1]
             spos2 = global_route[sp2]
             epos2 = global_route[ep2]
-            # if (sp1 == sp2 and ep1 == ep2) or (ep1 == sp2) or (ep2 == sp1):
             if not len({sp1, ep1, sp2, ep2}) == 4:
                 sp2 += 1
                 continue
@@ -69,15 +64,9 @@ def cross_path(euclidean_map, node, init_length, route, deadline):
                 global_route[sp2] = temp
                 global_route[ep1 + 1: sp2] = global_route[ep1 + 1: sp2][::-1]
 
-                print("(", spos1, ", ", epos1, ") (", spos2, ", ", epos2, ")")
-                # temp_route.append(temp_route[0])
-                # Plotter(node, cal_length(temp_route), temp_route, True)
-                # del temp_route[-1]
                 sp1 = -1
                 sp2 = 0
                 break
-                # print("bad (", spos1, ", ", epos1, ") (", spos2, ", ", epos2, ")")
-                sp2 += 1
             else:
                 sp2 += 1
         sp2 = 0

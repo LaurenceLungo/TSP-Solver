@@ -1,4 +1,4 @@
-from .plotter.plotter import Plotter
+# from .plotter.plotter import Plotter
 
 
 def greedy_rotate(euclidean_map, node):

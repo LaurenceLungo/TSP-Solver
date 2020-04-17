@@ -80,15 +80,11 @@ for n in node:
 # end of data & arguments parsing -------------------------------------------------
 
 # main <><><><><><><><>><><><><><><><><><><><><><><><><><><><><><><><>><><><><><><><><><><><>><><><><><><><><><><><><><>
-duration = args["time"]
-deadline = time() + duration
+deadline = time() + args["time"]
 final_length = None
 final_route = None
 
 g_length, g_route = greedy_rotate(euclidean_map, node)
-print("Greedy: " + str(g_length) + " " + str(g_route))
-print("time: ", time() - ini_time)
-duration -= (time() - ini_time)
 
 if len(node) <= 52:
     best_sa_length = None
@@ -102,26 +98,15 @@ if len(node) <= 52:
             best_sa_route = sa_route
     final_length = best_sa_length
     final_route = best_sa_route
-elif len(node) <= 600:  # 575
-    c_length, c_route = cross_path(euclidean_map, node, g_length, g_route, deadline)
-    print("Cross: " + str(c_length) + " " + str(c_route))
-    print("time: ", time() - ini_time)
+elif len(node) <= 575:
+    c_length, c_route = cross_path(euclidean_map, node, g_route)
     t_length, t_route = two_opt(euclidean_map, c_length, c_route, deadline)
-    print("two-opt: <<" + str(t_length) + ">> " + str(t_route))
-    print("time: ", time() - ini_time)
     final_length = t_length
     final_route = t_route
 else:
     t_length, t_route = two_opt(euclidean_map, g_length, g_route, deadline)
-    print("two-opt: <<" + str(t_length) + ">> " + str(t_route))
-    print("time: ", time() - ini_time)
     final_length = t_length
     final_route = t_route
-
-print()
-print("running time: ", time() - ini_time)
-print("optimal tour: ", final_route)
-print("optimal length: ", final_length)
 
 output_string = "tour cost: " + str(final_length) + "\n" + "tour: " + str(final_route)
 out = open(args['output'], 'w')

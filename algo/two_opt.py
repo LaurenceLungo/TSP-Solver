@@ -1,4 +1,4 @@
-from .plotter.plotter import Plotter
+# from .plotter.plotter import Plotter
 from random import seed, randrange
 from time import time
 
@@ -31,7 +31,6 @@ def two_opt(euclidean_map, init_length, route, deadline):
         if curr_length <= global_length:
             global_route = curr_route
             global_length = curr_length
-        # print(str(global_length))# + " time: " + str(time()-st))
     global_route.append(global_route[0])
     # Plotter(node, global_length, global_route, True)
     return global_length, global_route
