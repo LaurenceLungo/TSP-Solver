@@ -1,6 +1,7 @@
 from .plotter.plotter import Plotter
 from random import seed, randrange, random
-import time, math
+from time import time
+import math
 import numpy as np
 
 seed()
