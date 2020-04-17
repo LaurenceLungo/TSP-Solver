@@ -1,18 +1,23 @@
 from .plotter.plotter import Plotter
 
 
-def cross_path(euclideanMap, node, init_length, route):
+def cross_path(euclidean_map, node, init_length, route, deadline):
     route_len = len(route) - 1
     global_route = route[:route_len].copy()
     global_length = init_length
 
     def is_intersecting(s1, e1, s2, e2):
-        if ((e1[1] - s1[1]) == 0 and (e2[1] - s2[1] == 0)) \
-                or (((e1[1] - s1[1]) / (e1[0] - s1[0])) == ((e2[1] - s2[1]) / (e2[0] - s2[0]))):
+        if (e1[0] == s1[0] and e2[0] == s2[0]) \
+                or (((e1[0] == s1[0]) and (e2[0] == s2[0])) and
+                    (((e1[1] - s1[1]) / (e1[0] - s1[0])) == ((e2[1] - s2[1]) / (e2[0] - s2[0])))):
             return 0
 
         def is_touching(p, s, e):
-            if p[1] == s[1] == e[1]:  # 3 points form a vertical line
+            if p[0] == s[0] == e[0]:  # 3 points form a vertical line
+                return True
+            elif not (e[0] == p[0]) == (p[0] == s[0]):
+                return False
+            elif (e[0] == p[0]) and (p[0] == s[0]):
                 return True
             return ((e[1] - p[1]) / (e[0] - p[0])) == ((p[1] - s[1]) / (p[0] - s[0]))
 
@@ -29,12 +34,15 @@ def cross_path(euclideanMap, node, init_length, route):
         s = numerator2 / denominator
         return (0 <= r <= 1) and (0 <= s <= 1)
 
+    def is_same_pt(p1, p2):
+        return p1[0] == p2[0] and p1[1] == p2[1]
+
     def cal_length(r):
         c = 0
         for i in range(len(r) - 1):
             j = i + 1
-            c += euclideanMap[r[i]][r[j]]
-        c += euclideanMap[r[0]][r[-1]]
+            c += euclidean_map[r[i]][r[j]]
+        c += euclidean_map[r[0]][r[-1]]
         return c
 
     sp1 = 0
@@ -75,7 +83,7 @@ def cross_path(euclideanMap, node, init_length, route):
         sp2 = 0
         sp1 += 1
 
-    global_length = cal_length(temp_route)
+    global_length = cal_length(global_route)
     global_route.append(global_route[0])
-    Plotter(node, global_length, global_route, True)
+    # Plotter(node, global_length, global_route, True)
     return global_length, global_route
