@@ -1,7 +1,7 @@
 from .plotter.plotter import Plotter
 from random import seed, randrange, random
 from time import time
-import math
+from math import exp
 import numpy as np
 
 seed()
@@ -76,7 +76,7 @@ def sim_annealing(euclideanMap, node, init_length, route, num_iter):
             global_length = curr_length
             # print(str(global_length))  # + " time: " + str(time() - st) + " iter:" + str(i))
         elif curr_length > global_length:
-            probability_for_risk = math.exp(-(curr_length - global_length) / temp)
+            probability_for_risk = exp(-(curr_length - global_length) / temp)
             fuck_it = biased_flip(probability_for_risk)
             prob_graph.append([i, probability_for_risk])
             temp_graph.append([i, temp])

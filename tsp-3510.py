@@ -3,11 +3,12 @@ from random import seed, randint
 from argparse import ArgumentParser
 from pandas import read_csv
 from numpy import linalg, array
+from math import sin, cos
+
 from algo.greedy_rotate import greedy_rotate
 from algo.cross_path import cross_path
 from algo.two_opt import two_opt
 from algo.simulated_annealing import sim_annealing
-import math
 
 ini_time = time()
 
@@ -30,7 +31,7 @@ ini_time = time()
 # sw24978 855597 Sweden
 # argument parser -----------------------------------------------------------------
 parser = ArgumentParser(description='Solving the TSP.')
-parser.add_argument('input', metavar='i', nargs='?', default='pr439.txt',
+parser.add_argument('input', metavar='i', nargs='?', default='wi29.txt',
                     help='the path to input coordinates file')
 parser.add_argument('output', metavar='o', nargs='?', default='output-tour.txt',
                     help='the path to output tour file')
@@ -51,17 +52,12 @@ def gen_node(num):
 
 
 def rotate(origin, point, angle):
-    """
-    Rotate a point counterclockwise by a given angle around a given origin.
-
-    The angle should be given in radians.
-    """
     ox, oy = origin
     px = point[0]
     py = point[1]
 
-    qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
-    qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
+    qx = ox + cos(angle) * (px - ox) - sin(angle) * (py - oy)
+    qy = oy + sin(angle) * (px - ox) + cos(angle) * (py - oy)
     return qx, qy
 # end of helper functions ---------------------------------------------------------
 
@@ -90,7 +86,7 @@ print("time: ", time()-ini_time)
 duration -= (time()-ini_time)
 print(duration)
 
-if len(node) <= 0: #52
+if len(node) <= 52: #52
     best_sa_length = None
     best_sa_route = None
     for _ in range(4):

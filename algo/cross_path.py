@@ -56,14 +56,10 @@ def cross_path(euclideanMap, node, init_length, route):
                 continue
             if is_intersecting(node[spos1], node[epos1], node[spos2],
                                node[epos2]):
-                temp_route = global_route.copy()
-                temp = temp_route[ep1]
-                temp_route[ep1] = temp_route[sp2]
-                temp_route[sp2] = temp
-                temp_route[ep1 + 1: sp2] = temp_route[ep1 + 1: sp2][::-1]
-
-                global_route = temp_route.copy()
-                global_length = cal_length(temp_route)
+                temp = global_route[ep1]
+                global_route[ep1] = global_route[sp2]
+                global_route[sp2] = temp
+                global_route[ep1 + 1: sp2] = global_route[ep1 + 1: sp2][::-1]
 
                 print("(", spos1, ", ", epos1, ") (", spos2, ", ", epos2, ")")
                 # temp_route.append(temp_route[0])
@@ -79,6 +75,7 @@ def cross_path(euclideanMap, node, init_length, route):
         sp2 = 0
         sp1 += 1
 
+    global_length = cal_length(temp_route)
     global_route.append(global_route[0])
     Plotter(node, global_length, global_route, True)
     return global_length, global_route
