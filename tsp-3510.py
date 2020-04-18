@@ -92,7 +92,6 @@ if len(node) <= 52:
     for _ in range(int(args["time"]/30 - 1)):
         # worst case 30 sec per run
         sa_length, sa_route = sim_annealing(euclidean_map, node, g_length, g_route, 2000000)
-        print(sa_length)
         if best_sa_length is None or sa_length < best_sa_length:
             best_sa_length = sa_length
             best_sa_route = sa_route
