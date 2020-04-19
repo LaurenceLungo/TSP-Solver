@@ -1,7 +1,4 @@
-# from .plotter.plotter import Plotter
-
-
-def cross_path(euclidean_map, node, route):
+def cross_path_dismantling(euclidean_map, node, route):
     route_len = len(route) - 1
     global_route = route[:route_len].copy()
 

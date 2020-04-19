@@ -1,4 +1,3 @@
-# from .plotter.plotter import Plotter
 from random import seed, randrange
 from time import time
 

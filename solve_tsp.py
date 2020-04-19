@@ -6,7 +6,7 @@ from numpy import linalg, array
 from math import sin, cos
 
 from algo.greedy_rotate import greedy_rotate
-from algo.cross_path import cross_path
+from algo.cross_path_dismantling import cross_path_dismantling
 from algo.two_opt import two_opt
 from algo.simulated_annealing import sim_annealing
 
@@ -98,7 +98,7 @@ if len(node) <= 52:
     final_length = best_sa_length
     final_route = best_sa_route
 elif len(node) <= 575:
-    c_length, c_route = cross_path(euclidean_map, node, g_route)
+    c_length, c_route = cross_path_dismantling(euclidean_map, node, g_route)
     t_length, t_route = two_opt(euclidean_map, c_length, c_route, deadline)
     final_length = t_length
     final_route = t_route
