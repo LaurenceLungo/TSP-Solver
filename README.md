@@ -52,7 +52,6 @@ $ python solve_tsp.py <input-file-directory> <output-file-directory> -v
 A sample visualization:\
 ![image](/images/fig1.png)
 <br>
-<br>
 To see more information about the usage, run
 ```sh
 $ python solve_tsp.py -h
