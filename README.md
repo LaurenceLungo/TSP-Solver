@@ -35,7 +35,7 @@ $ pip install -r requirements.txt
 To execute the program, run
 ```sh
 $ python solve_tsp.py <input-file-directory> <output-file-directory>
-# example: python solve_tsp.py ./datasets/wi29 output.txt
+# example: python solve_tsp.py datasets/wi29.txt output.txt
 ```
 To see more information about the usage, run
 ```sh
