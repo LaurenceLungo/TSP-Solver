@@ -1,8 +1,7 @@
-from .plotter.plotter import Plotter
+# from .plotter.plotter import Plotter
 from random import seed, randrange, random
 from time import time
 from math import exp
-import numpy as np
 
 seed()
 
@@ -57,37 +56,24 @@ def sim_annealing(euclidean_map, node, init_length, route, num_iter):
 
     init_temp = 25000
     temp = init_temp
-    amb_temp = 0.00
-    k = .0000125 / 1.4
-    delta_temp = (init_temp - amb_temp) / num_iter
     percent_temp = .999993
-    prob_graph = []
-    temp_graph = []
-    chkpt = []
-    y = 16
-    z = 10
-    for f in range(z, y):
-        chkpt.append(int(num_iter * f / y))
+    # prob_graph = []
+    # temp_graph = []
 
     for i in range(num_iter):
         curr_route, curr_length = two_opt(global_route)
         if curr_length < global_length:
             global_route = curr_route
             global_length = curr_length
-            # print(str(global_length))  # + " time: " + str(time() - st) + " iter:" + str(i))
         elif curr_length > global_length:
             probability_for_risk = exp(-(curr_length - global_length) / temp)
             fuck_it = biased_flip(probability_for_risk)
-            prob_graph.append([i, probability_for_risk])
-            temp_graph.append([i, temp])
+            # prob_graph.append([i, probability_for_risk])
+            # temp_graph.append([i, temp])
             if fuck_it:
                 global_route = curr_route
                 global_length = curr_length
-                # print("*" + str(global_length))  # + " time: " + str(time() - st) + " iter:" + str(i))
-        #     temp += (temp / 2)
-        # temp -= delta_temp
         temp *= percent_temp
-        # temp = amb_temp + (temp - amb_temp)*math.exp(-k*i)
         if global_length < global_best_length:
             global_best_length = global_length
             global_best_route = global_route.copy()
