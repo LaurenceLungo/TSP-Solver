@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 from pandas import read_csv
 from numpy import linalg, array
 from math import sin, cos
+from visualizer.visualizer import Visualizer
 
 from algo.greedy_rotate import greedy_rotate
 from algo.cross_path_dismantling import cross_path_dismantling
@@ -13,7 +14,6 @@ from algo.simulated_annealing import sim_annealing
 ini_time = time()  # start the timer here
 
 # ===== List of datasets =====
-# ff4 Fake Location
 # wi29 27603 Western Sahara
 # dj38 6656 Djibouti
 # berlin52 7544 Berlin
@@ -23,13 +23,9 @@ ini_time = time()  # start the timer here
 # lin318 Lin/Kernighan
 # pr439
 # rat575
-# pr1002_600
 # rat783
-# pla7397_783
 # uy734 79114 Uruguay
 # zi929 95345 Zimbabwe
-# -- lu980 11340 Luxembourg
-# pla7397_980
 # sw24978 855597 Sweden
 # ===========================
 
@@ -41,7 +37,10 @@ parser.add_argument('output', metavar='o', nargs='?', default='output-tour.txt',
                     help='the path to output tour file')
 parser.add_argument('--time', metavar='-t', type=int, nargs='?', default=180,
                     help='the maximum number of seconds that the program should run')
-args = vars(parser.parse_args())
+parser.add_argument('-v', action='store_true',
+                    help='visualize the result at the end')
+args = parser.parse_args()
+args_value = vars(args)
 
 
 # end of argument parser ----------------------------------------------------------
@@ -68,7 +67,7 @@ def rotate(origin, point, angle):  # rotates a point about an origin by an angle
 # end of helper functions ---------------------------------------------------------
 
 # data & arguments parsing --------------------------------------------------------
-node = read_csv(args['input'], sep=" ", header=None, names=['idx', 'x', 'y']).set_index('idx')[['y', 'x']].values
+node = read_csv(args_value['input'], sep=" ", header=None, names=['idx', 'x', 'y']).set_index('idx')[['y', 'x']].values
 
 euclidean_map = [[0 for x in range(len(node))] for y in range(len(node))]
 for i in range(len(node)):
@@ -79,19 +78,19 @@ for n in node:
     n[0], n[1] = rotate([0, 0], [n[0], n[1]], 1)
 # end of data & arguments parsing -------------------------------------------------
 
-# main <><><><><><><><>><><><><><><><><><><><><><><><><><><><><><><><>><><><><><><><><><><><>><><><><><><><><><><><><><>
-deadline = time() + args["time"]
+# main <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>><><><><><><><><><><><><><>
+deadline = time() + args_value["time"]
 final_length = None
 final_route = None
 
-g_length, g_route = greedy_rotate(euclidean_map, node)
+g_length, g_route = greedy_rotate(euclidean_map)
 
 if len(node) <= 50:
     best_sa_length = None
     best_sa_route = None
-    for _ in range(int(args["time"]/30 - 1)):
+    for _ in range(int(args_value["time"] / 30 - 1)):
         # worst case 30 sec per run
-        sa_length, sa_route = sim_annealing(euclidean_map, node, g_length, g_route, 2000000)
+        sa_length, sa_route = sim_annealing(euclidean_map, g_length, g_route, 2000000)
         if best_sa_length is None or sa_length < best_sa_length:
             best_sa_length = sa_length
             best_sa_route = sa_route
@@ -108,7 +107,11 @@ else:
     final_route = t_route
 
 output_string = "tour cost: " + str(final_length) + "\n" + "tour: " + str(final_route)
-out = open(args['output'], 'w')
+out = open(args_value['output'], 'w')
 out.write(output_string)
 out.close()
-# end of main <><><><><><><><>><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>><><><><><><><><><><>
+print("finish")
+
+if args.v:
+    Visualizer(node, final_length, final_route)
+# end of main <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>

@@ -3,6 +3,7 @@ from time import time
 
 
 def two_opt(euclidean_map, init_length, route, deadline):
+    print("applying 2-opt...")
     seed()
     route_len = len(route)-1
     global_route = route[:route_len].copy()
@@ -26,11 +27,9 @@ def two_opt(euclidean_map, init_length, route, deadline):
         curr_route[i] = curr_route[j]
         curr_route[j] = temp
         curr_length = cal_length(curr_route)
-        # Plotter(node, curr_length, curr_route, True)
         if curr_length <= global_length:
             global_route = curr_route
             global_length = curr_length
     global_route.append(global_route[0])
-    # Plotter(node, global_length, global_route, True)
     return global_length, global_route
 

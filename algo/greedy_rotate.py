@@ -1,4 +1,5 @@
-def greedy_rotate(euclidean_map, node):
+def greedy_rotate(euclidean_map):
+    print("finding a greedy path...")
     globalTourLength = None
     globalTourRoute = []
     for p in range(len(euclidean_map)):
@@ -29,5 +30,4 @@ def greedy_rotate(euclidean_map, node):
         if globalTourLength is None or tourLength < globalTourLength:
             globalTourLength = tourLength
             globalTourRoute = tourRoute
-    # Plotter(node, globalTourLength, globalTourRoute, True)
     return globalTourLength, globalTourRoute

@@ -1,4 +1,5 @@
 def cross_path_dismantling(euclidean_map, node, route):
+    print("applying cross path dismantling...")
     route_len = len(route) - 1
     global_route = route[:route_len].copy()
 

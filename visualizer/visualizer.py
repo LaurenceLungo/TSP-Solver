@@ -1,8 +1,7 @@
 from matplotlib import pyplot as plt
-from matplotlib.animation import FuncAnimation
 
 
-class Plotter:
+class Visualizer:
 
     def __init__(self, node_map, length, route, annotate_flag=False, small_marker=False):
         self.node_map = node_map

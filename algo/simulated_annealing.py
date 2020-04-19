@@ -5,8 +5,8 @@ from math import exp
 seed()
 
 
-def sim_annealing(euclidean_map, node, init_length, route, num_iter):
-    st = time()
+def sim_annealing(euclidean_map, init_length, route, num_iter):
+    print("applying simulated annealing...")
     route_len = len(route) - 1
     global_route = route[:route_len].copy()
     global_length = init_length
@@ -72,8 +72,5 @@ def sim_annealing(euclidean_map, node, init_length, route, num_iter):
         if global_length < global_best_length:
             global_best_length = global_length
             global_best_route = global_route.copy()
-    # Plotter(np.array(prob_graph), 0, [0], False, True)
-    # Plotter(np.array(temp_graph), 0, [0], False, True)
     global_best_route.append(global_best_route[0])
-    # Plotter(node, global_best_length, global_best_route, False)
     return global_best_length, global_best_route
