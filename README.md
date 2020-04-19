@@ -32,10 +32,22 @@ Install all the dependencies from Pypi:
 $ pip install -r requirements.txt
 ```
 ## Usage
-To execute the program, run
+For a quick start, run
+```sh
+$ python solve_tsp.py <input-file-directory>
+# example: python solve_tsp.py datasets/wi29.txt
+```
+The result will be stored in a newly created **output-tour.txt** in the same directory.\
+<br>
+To specify the output file, run
 ```sh
 $ python solve_tsp.py <input-file-directory> <output-file-directory>
 # example: python solve_tsp.py datasets/wi29.txt output.txt
+```
+To visualize the result, add the -v flag
+```sh
+$ python solve_tsp.py <input-file-directory> <output-file-directory> -v
+# example: python solve_tsp.py datasets/wi29.txt output.txt -v
 ```
 To see more information about the usage, run
 ```sh
