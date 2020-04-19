@@ -35,12 +35,12 @@ ini_time = time()  # start the timer here
 
 # argument parser -----------------------------------------------------------------
 parser = ArgumentParser(description='Solving the TSP.')
-parser.add_argument('input', metavar='i', nargs='?', default='wi29.txt',
+parser.add_argument('input', metavar='i', nargs='?',
                     help='the path to input coordinates file')
 parser.add_argument('output', metavar='o', nargs='?', default='output-tour.txt',
                     help='the path to output tour file')
-parser.add_argument('time', metavar='t', type=int, nargs='?', default=180,
-                    help='the maximum running time')
+parser.add_argument('--time', metavar='-t', type=int, nargs='?', default=180,
+                    help='the maximum number of seconds that the program should run')
 args = vars(parser.parse_args())
 
 
@@ -86,7 +86,7 @@ final_route = None
 
 g_length, g_route = greedy_rotate(euclidean_map, node)
 
-if len(node) <= 52:
+if len(node) <= 50:
     best_sa_length = None
     best_sa_route = None
     for _ in range(int(args["time"]/30 - 1)):
@@ -97,7 +97,7 @@ if len(node) <= 52:
             best_sa_route = sa_route
     final_length = best_sa_length
     final_route = best_sa_route
-elif len(node) <= 575:
+elif len(node) <= 500:
     c_length, c_route = cross_path_dismantling(euclidean_map, node, g_route)
     t_length, t_route = two_opt(euclidean_map, c_length, c_route, deadline)
     final_length = t_length
