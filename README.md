@@ -50,7 +50,7 @@ $ python solve_tsp.py <input-file-directory> <output-file-directory> -v
 # example: python solve_tsp.py datasets/wi29.txt output.txt -v
 ```
 A sample visualization:\
-![image](https://github.com/LaurenceLungo/TSP-Solver/tree/master/images/fig1.png)
+![image](/images/fig1.png)
 <br>
 <br>
 To see more information about the usage, run
