@@ -89,7 +89,7 @@ for loop in range(args_value["loop"]):
     final_route = None
 
     g_length, g_route = greedy_rotate(euclidean_map)
-    print("g_length:", g_length, "time cost:", time() - ini_time)
+    print("greedy cost:", g_length, "(time cost:", time() - ini_time, "s)")
 
     if args_value["algo"] == 1 or (args_value["algo"] == 0 and len(node) <= 50):
         best_sa_length = None
@@ -104,14 +104,14 @@ for loop in range(args_value["loop"]):
         final_route = best_sa_route
     elif args_value["algo"] == 2 or (args_value["algo"] == 0 and len(node) <= 500):
         c_length, c_route = cross_path_dismantling(euclidean_map, node, g_route)
-        print("c_length:", c_length, "time cost:", time() - ini_time)
+        print("cross path cost:", c_length, "time cost:", time() - ini_time, "s)")
         t_length, t_route = two_opt(euclidean_map, c_length, c_route, deadline)
-        print("t_length:", t_length, "time cost:", time() - ini_time)
+        print("2-opt cost:", t_length, "(time cost:", time() - ini_time, "s)")
         final_length = t_length
         final_route = t_route
     else:
         t_length, t_route = two_opt(euclidean_map, g_length, g_route, deadline)
-        print("t_length:", t_length, "time cost:", time() - ini_time)
+        print("2-opt cost:", t_length, "(time cost:", time() - ini_time, "s)")
         final_length = t_length
         final_route = t_route
 
@@ -122,9 +122,9 @@ for loop in range(args_value["loop"]):
     out = open(args_value['output'], mode)
     out.write(output_string)
     out.close()
-    print(output_string)
-    print("finish")
-    print("time cost:", time() - ini_time)
+    print("final tour cost:", final_length)
+    print("--- finish (total time cost:", time() - ini_time, "s) ---")
+    print()
 
     if loop == (args_value["loop"] - 1) and args.v:
         Visualizer(node, final_length, final_route)
