@@ -83,7 +83,7 @@ for n in node:
 # end of data & arguments parsing -------------------------------------------------
 
 # main <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>><><><><><><><><><><><><><>
-for _ in range(args_value["loop"]):
+for loop in range(args_value["loop"]):
     deadline = time() + args_value["time"]
     final_length = None
     final_route = None
@@ -126,6 +126,6 @@ for _ in range(args_value["loop"]):
     print("finish")
     print("time cost:", time() - ini_time)
 
-    if _ == args_value["loop"] - 1 and args.v:
+    if loop == (args_value["loop"] - 1) and args.v:
         Visualizer(node, final_length, final_route)
 # end of main <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
