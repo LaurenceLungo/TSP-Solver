@@ -7,20 +7,7 @@ It also provides a visualization module to present to result graphically.\
 <br>
 This project runs on Python3.
 
-## Project structure
-| -- TSP-Solver/\
-&nbsp;&nbsp;&nbsp;&nbsp;| -- solve_tsp.py\
-&nbsp;&nbsp;&nbsp;&nbsp;| -- requirements.txt\
-&nbsp;&nbsp;&nbsp;&nbsp;| -- algo/\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| -- greedy_rotate.py\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| -- two_opt.py\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| -- cross_path_dismantling.py\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| -- simulated_annealing.py\
-&nbsp;&nbsp;&nbsp;&nbsp;| -- plotter/\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| -- plotter.py\
-&nbsp;&nbsp;&nbsp;&nbsp;| -- datasets/\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| -- ...\
-<br>
+## Code structure
 + **solve_tsp.py** is the main script which parses the input dataset and outputs the result.
 + **algo/** contains the 4 algorithm modules.
 + **plotter/** contains the TSP tour visualization module.
