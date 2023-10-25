@@ -7,6 +7,21 @@ It also provides a visualization module to present to result graphically.\
 <br>
 This project runs on Python3.
 
+## Path finding strategy
+The program applies different strategies to datasets of different sizes to get the best tour possible in ~3 minutes.
+<br>
+It first uses *greedy_rotate* to find a reasonably short path to begin with.\
+Then,
+- for datasets with **<= 50 nodes**:\
+&nbsp;&nbsp;&nbsp;&nbsp;*simulated_annealing* is used to further optimize the path.\
+&nbsp;&nbsp;&nbsp;&nbsp;If you have good luck it might find you the optimal path.
+- for datasets with **> 50 and <= 500 nodes**:\
+&nbsp;&nbsp;&nbsp;&nbsp;*cross_path_dismantling* followed by *two_opt* are used to further optimize the path,\
+&nbsp;&nbsp;&nbsp;&nbsp;because the size of the dataset is too large for *simulated_annealing* to yield a good result in 3 minutes.
+- for datasets with **>500 nodes**:\
+&nbsp;&nbsp;&nbsp;&nbsp;only *two_opt* is used to further optimize the path,\
+&nbsp;&nbsp;&nbsp;&nbsp;becasue the dataset size is tpp big even for *cross_path_dismantling* to complete within 3 minutes.
+
 ## Code structure
 + **solve_tsp.py** is the main script which parses the input dataset and outputs the result.
 + **algo/** contains the 4 algorithm modules.
@@ -69,18 +84,3 @@ tour: [7, 3, 2, 6, 8, 12, 13, 15, 23, 24, 26, 19, 25, 27, 28, 22, 21, 20, 16, 17
 + **algo.two_opt**: a basic 2-opt path optimizer.
 + **algo.cross_path_dismantling**: a path optimizer which detects cross paths and dismantles them.
 + **algo.simulated_annealing**: a basic simulated annealing path optimizer.
-
-## Path finding strategy
-The program applies different strategies to datasets of different sizes to get the best tour possible in ~3 minutes.
-<br>
-It first uses *greedy_rotate* to find a reasonably short path to begin with.\
-Then,
-- for datasets with **<= 50 nodes**:\
-&nbsp;&nbsp;&nbsp;&nbsp;*simulated_annealing* is used to further optimize the path.\
-&nbsp;&nbsp;&nbsp;&nbsp;If you have good luck it might find you the optimal path.
-- for datasets with **> 50 and <= 500 nodes**:\
-&nbsp;&nbsp;&nbsp;&nbsp;*cross_path_dismantling* followed by *two_opt* are used to further optimize the path,\
-&nbsp;&nbsp;&nbsp;&nbsp;because the size of the dataset is too large for *simulated_annealing* to yield a good result in 3 minutes.
-- for datasets with **>500 nodes**:\
-&nbsp;&nbsp;&nbsp;&nbsp;only *two_opt* is used to further optimize the path,\
-&nbsp;&nbsp;&nbsp;&nbsp;becasue the dataset size is tpp big even for *cross_path_dismantling* to complete within 3 minutes.
