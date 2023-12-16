@@ -1,5 +1,5 @@
 # Hybrid Solver for Travelling Salesman Problem (TSP)
-This is a Python project which computes a sub-optimal solution to the [Travelling Salesman Problem](https://en.wikipedia.org/wiki/Travelling_salesman_problem) in ~3 minutes.\
+This is a Python project which computes a heuristic solution to the [Travelling Salesman Problem](https://en.wikipedia.org/wiki/Travelling_salesman_problem) in ~3 minutes.\
 <br>
 The program applies different strateges to datasets of different sizes using a combination of greedy, 2-opt, dismantling cross path, and simulated annealing algorithms.\
 <br>
